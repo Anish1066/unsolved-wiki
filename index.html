@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Wiki Generator</title>
+    <script>
+        // Function to fetch a random Wikipedia article from a predefined list
+        async function fetchRandomArticle() {
+            const articleTitles = [
+                "Albert_Einstein",
+                "Isaac_Newton",
+                "Marie_Curie",
+                "Nikola_Tesla",
+                "Ada_Lovelace",
+                "Charles_Darwin"
+            ];
+
+            // Randomly select an article title
+            const randomIndex = Math.floor(Math.random() * articleTitles.length);
+            const selectedTitle = articleTitles[randomIndex];
+
+            // Fetch the article data using Wikipedia API
+            const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${selectedTitle}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch the article");
+                }
+
+                const articleData = await response.json();
+
+                // Update the UI with the fetched article
+                document.getElementById("article-title").innerText = articleData.title;
+                document.getElementById("article-extract").innerText = articleData.extract;
+                document.getElementById("article-link").href = articleData.content_urls.desktop.page;
+                document.getElementById("article-link").innerText = "Read more on Wikipedia";
+            } catch (error) {
+                console.error("Error fetching the article:", error);
+                alert("Something went wrong. Please try again later.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Random Wikipedia Article Generator</h1>
+    <button onclick="fetchRandomArticle()">Get Random Article</button>
+    <div id="article-display">
+        <h2 id="article-title">Article Title</h2>
+        <p id="article-extract">Article summary will appear here.</p>
+        <a id="article-link" href="#" target="_blank">Read more</a>
+    </div>
+</body>
+</html>
