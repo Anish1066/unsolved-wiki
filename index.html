@@ -3,9 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Wiki Generator</title>
+    <title>Unsolved Mystery Generator</title>
+     <style>
+      body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            flex-direction: column; 
+            text-align: center; 
+            font-family: Arial, sans-serif;
+            background-color: #202123; 
+            color: #FFFFFF; 
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #FFFFFF; 
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #2C2D30; 
+            color: #FFFFFF; 
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1F2022; 
+        }
+
+        #article-display {
+            margin-top: 30px;
+        }
+
+        #article-title, #article-extract, #article-link {
+            color: #FFFFFF;
+    </style>
     <script>
-        // Function to fetch a random Wikipedia article from a predefined list
         async function fetchRandomArticle() {
             const articleTitles = [
                 "Princes_in_the_Tower",
@@ -379,11 +420,9 @@
                 
             ];
 
-            // Randomly select an article title
             const randomIndex = Math.floor(Math.random() * articleTitles.length);
             const selectedTitle = articleTitles[randomIndex];
 
-            // Fetch the article data using Wikipedia API
             const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${selectedTitle}`;
 
             try {
@@ -394,7 +433,6 @@
 
                 const articleData = await response.json();
 
-                // Update the UI with the fetched article
                 document.getElementById("article-title").innerText = articleData.title;
                 document.getElementById("article-extract").innerText = articleData.extract;
                 document.getElementById("article-link").href = articleData.content_urls.desktop.page;
@@ -408,7 +446,7 @@
 </head>
 <body>
     <h1>Random Wikipedia Article Generator</h1>
-    <button onclick="fetchRandomArticle()">Get Random Article</button>
+    <button onclick="fetchRandomArticle()">Get Unsolved Mystery</button>
     <div id="article-display">
         <h2 id="article-title">Article Title</h2>
         <p id="article-extract">Article summary will appear here.</p>
